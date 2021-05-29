@@ -1,0 +1,25 @@
+{
+  "name": "social-nework-api",
+  "version": "1.0.0",
+  "description": "This code contains API routes for a social network with data created and stored using MongoDB.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vsjanarthani/Social-Network-API-MongoDB.git"
+  },
+  "keywords": [],
+  "author": "Janarthani V Subramaniam",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vsjanarthani/Social-Network-API-MongoDB/issues"
+  },
+  "homepage": "https://github.com/vsjanarthani/Social-Network-API-MongoDB#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.12.12"
+  }
+}
