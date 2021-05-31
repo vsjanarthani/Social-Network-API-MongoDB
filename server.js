@@ -8,7 +8,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 // mongoose connection
-mongoose.connect(process.env.MONGODB_ENDPOINT || 'mongodb://localhost/socialNetworkDb', {
+mongoose.connect(process.env.MONGODB_ENDPOINT || `mongodb://localhost:${PORT}/socialNetworkDb`, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
