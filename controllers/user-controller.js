@@ -75,7 +75,7 @@ const userController = {
             const deletedUser = await User.findOneAndDelete({ _id: params.id });
             if (deletedUser) {
                 await Thought.deleteMany({ userId: params.id});
-                res.status(200).json(deletedUser);
+                res.status(200).json({delted_User: deletedUser});
             }
             else {
                 return res.status(404).json({ Msg: `No user found with the Id ${params.id}` });
@@ -90,12 +90,8 @@ const userController = {
     async addFriend({ params }, res) {
         try {
             const userByIdFriendAdded = await User.findOneAndUpdate(
-                { _id: params.id },
-                {
-                    friends: {
-                        $addToSet: params.friendId
-                    }
-                },
+                { _id: params.userId },
+                { $push: { friends: params.friendId } },
                 { new: true }
             )
                 .populate({
@@ -106,7 +102,7 @@ const userController = {
                 res.status(200).json(userByIdFriendAdded);
             }
             else {
-                return res.status(404).json({ Msg: `No user found with the Id ${params.id}` });
+                return res.status(404).json({ Msg: `No user found with the Id ${params.userId}` });
             }
         }
         catch (e) {
@@ -118,7 +114,7 @@ const userController = {
     async deleteFriend({ params }, res) {
         try {
             const userByIdFriendDeleted = await User.findOneAndUpdate(
-                { _id: params.id },
+                { _id: params.userId },
                 { $pull: { friends: params.friendId } },
                 { new: true }
             )
@@ -130,7 +126,7 @@ const userController = {
                 res.status(200).json(userByIdFriendDeleted);
             }
             else {
-                return res.status(404).json({ Msg: `No user found with the Id ${params.id}` });
+                return res.status(404).json({ Msg: `No user found with the Id ${params.userId}` });
             }
         }
         catch (e) {

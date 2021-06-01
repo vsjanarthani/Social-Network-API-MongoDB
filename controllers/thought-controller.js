@@ -46,7 +46,7 @@ const thoughtController = {
         try {
             const newThought = await Thought.create(body);
             const updatedUser = await User.findOneAndUpdate(
-                { _id: body.userId },
+                { username: body.username },
                 { $push: { thoughts: newThought._id } },
                 {new: true}
             );
@@ -54,7 +54,7 @@ const thoughtController = {
                 res.status(200).json(updatedUser);
             }
             else {
-                return res.status(404).json({ Msg: `No user found with the userId ${body.userId}` });
+                return res.status(404).json({ Msg: `No user found with the username ${body.username}` });
             }
         }
         catch (e) {
@@ -89,18 +89,19 @@ const thoughtController = {
                 { _id: params.id }
             );
             if(deletedThought) {
+
                const updatedUser = await User.findOneAndUpdate(
-                    { _id: deletedThought.userId },
+                    { username: deletedThought.username },
                     { $pull: { thoughts: params.id } },
                     { new: true }
                 );
                 if (updatedUser) {
-                    res.status(200).json({Updated_User: `${updatedUser}`});
+                    res.status(200).json({Updated_User: updatedUser});
                 }
                 else {
                     return res.status(404).json({ Msg: `No user found with the Id ${parmas.userId}` });
                 }
-                res.status(200).json({deleted_thought: `${deletedThought}`});
+                res.status(200).json({deleted_thought: deletedThought});
             }
             else {
                 return res.status(404).json({ Msg: `No thought found with the Id ${params.id}` });
@@ -144,7 +145,7 @@ const thoughtController = {
             .populate({path: 'reactions', select: '-__v'})
             .select('-__v');
             if (thoughtbyIdReactionRemoved) {
-                res.status(200).json({Updated_Thought: `${thoughtbyIdReactionRemoved}`});
+                res.status(200).json({Updated_Thought: thoughtbyIdReactionRemoved});
             }
             else {
                 return res.status(404).json({ Msg: `No thought found with the Id ${params.thoughtId}` });

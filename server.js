@@ -6,9 +6,12 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+// app.use(express.static('public'));
+
+app.use(require('./routes'));
 
 // mongoose connection
-mongoose.connect(process.env.MONGODB_ENDPOINT || `mongodb://localhost:${PORT}/socialNetworkDb`, {
+mongoose.connect(process.env.MONGODB_ENDPOINT || `mongodb://localhost/socialNetworkDb`, {
   useNewUrlParser: true,
   useFindAndModify: false,
   useUnifiedTopology: true,
