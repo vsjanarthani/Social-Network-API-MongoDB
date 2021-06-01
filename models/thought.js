@@ -22,7 +22,15 @@ const reactionSchema = new Schema({
             return date.toLocaleDateString();
         }
     }
-});
+},
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
+);
 
 // Thoughts Schema
 const thoughtSchmea = new Schema({
@@ -43,9 +51,17 @@ const thoughtSchmea = new Schema({
         type: String,
         required: true
     },
-    reactions: [reactionSchema],
+    reactions: [reactionSchema]
 
-});
+},
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true
+        },
+        id: false
+    }
+);
 
 // Virtual to get reactions count
 thoughtSchmea.virtual('reactionCount').get(function () {
@@ -55,4 +71,4 @@ thoughtSchmea.virtual('reactionCount').get(function () {
 
 const Thought = model('Thought', thoughtSchmea);
 
-module.exports = { Thought };
+module.exports = Thought;
