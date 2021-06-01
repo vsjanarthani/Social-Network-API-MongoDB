@@ -6,9 +6,16 @@ const userController = {
     async getAllUsers(req, res) {
         try {
             const allUsers = await User.find({})
+                .populate({
+                    path: "thoughts",
+                    select: "-__v",
+                })
+                .populate({
+                    path: "friends",
+                    select: "-__v",
+                })
                 .select('-__v')
                 .sort({ _id: -1 });
-
             res.status(200).json(allUsers)
         }
         catch (e) {
@@ -74,8 +81,8 @@ const userController = {
         try {
             const deletedUser = await User.findOneAndDelete({ _id: params.id });
             if (deletedUser) {
-                await Thought.deleteMany({ userId: params.id});
-                res.status(200).json({delted_User: deletedUser});
+                await Thought.deleteMany({ userId: params.id });
+                res.status(200).json({ delted_User: deletedUser });
             }
             else {
                 return res.status(404).json({ Msg: `No user found with the Id ${params.id}` });

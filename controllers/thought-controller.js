@@ -123,7 +123,7 @@ const thoughtController = {
             .populate({path: 'reactions', select: '-__v'})
             .select('-__v');
             if (thoughtbyIdReactionAdded) {
-                res.status(200).json({Updated_Thought: `${thoughtbyIdReactionAdded}`});
+                res.status(200).json({Updated_Thought: thoughtbyIdReactionAdded});
             }
             else {
                 return res.status(404).json({ Msg: `No thought found with the Id ${params.thoughtId}` });
