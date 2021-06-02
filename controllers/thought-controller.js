@@ -51,7 +51,7 @@ const thoughtController = {
                 {new: true}
             );
             if(updatedUser) {
-                res.status(200).json(updatedUser);
+                res.status(200).json(newThought);
             }
             else {
                 return res.status(404).json({ Msg: `No user found with the username ${body.username}` });
@@ -96,12 +96,11 @@ const thoughtController = {
                     { new: true }
                 );
                 if (updatedUser) {
-                    res.status(200).json({Updated_User: updatedUser});
+                    res.status(200).json({deleted_thought: deletedThought});
                 }
                 else {
                     return res.status(404).json({ Msg: `No user found with the Id ${parmas.userId}` });
-                }
-                res.status(200).json({deleted_thought: deletedThought});
+                } 
             }
             else {
                 return res.status(404).json({ Msg: `No thought found with the Id ${params.id}` });
@@ -136,6 +135,7 @@ const thoughtController = {
 
     // Delete/remove a reaction by the reaction's reactionId from a thought(id)
     async deleteReactionbyId({params}, res) {
+        console.log(params);
         try {
             const thoughtbyIdReactionRemoved = await Thought.findOneAndUpdate(
                 { _id: params.thoughtId},

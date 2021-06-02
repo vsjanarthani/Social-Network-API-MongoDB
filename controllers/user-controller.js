@@ -62,7 +62,7 @@ const userController = {
     async updateUserById({ params, body }, res) {
         try {
             const updatedUser = await User.findOneAndUpdate({ _id: params.id }, body, {
-                new: true
+                new: true, 
             });
             if (updatedUser) {
                 res.status(200).json(updatedUser);
